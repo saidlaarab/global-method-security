@@ -1,8 +1,7 @@
 package spring.security.globalmethodsecurity.config;
 
-
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,16 +9,15 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class ProjectConfig {
-
+@Configuration
+public class UserDetailsConfig {
     @Bean
-    public UserDetailsService userDetailsService(){
+    public UserDetailsService userDetailsService() {
         InMemoryUserDetailsManager userDetailsService = new InMemoryUserDetailsManager();
 
         UserDetails saidUser = User.withUsername("said")
                 .password("said123")
-                .authorities("write")
+                .authorities("ROLE_admin") // <=> roles("admin")
                 .build();
 
         UserDetails medUser = User.withUsername("med")
